@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "SQLDatabase",
-    "displayName": "Banking"
+    "type": "Notebook",
+    "displayName": "nb_banking_transform"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "121ff7c8-56cc-8cbb-4708-010989d2aa1d"
+    "logicalId": "5b024b51-67ff-8712-4934-97180b9d97d2"
   }
 }
