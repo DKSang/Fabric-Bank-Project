@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "lh_finguard_gold"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8b1de2b7-a985-b4ee-45bb-29ee477e91f0"
+  }
+}

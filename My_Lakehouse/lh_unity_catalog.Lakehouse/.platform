@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Lakehouse",
-    "displayName": "lh_banking_bronze"
+    "displayName": "lh_unity_catalog"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "1c59ace4-8a5f-b7be-4d35-3afc5a3aca47"
+    "logicalId": "2947cead-18b1-b737-4fd0-d4386bb65a11"
   }
 }
