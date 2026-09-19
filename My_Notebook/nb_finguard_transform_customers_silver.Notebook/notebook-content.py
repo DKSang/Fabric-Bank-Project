@@ -66,6 +66,18 @@ bronze_df=spark.read.option('format','delta').load(bronze_table_url)
 
 # CELL ********************
 
+silver_df = (
+    bronze_df
+    .select("*")
+    .withColumn("account_open_date", col("account_open_date").cast("date"))
+    .withColumn("silver_ingestion_time_stamp", F.current_timestamp())
+)
+
+silver_df.write \
+    .format("delta") \
+    .mode("overwrite") \
+    .option("overwriteSchema", "true") \
+    .saveAsTable("dbo.customers")
 
 # METADATA ********************
 
