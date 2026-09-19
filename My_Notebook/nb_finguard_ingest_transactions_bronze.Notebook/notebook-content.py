@@ -26,6 +26,7 @@
 # CELL ********************
 
 from pyspark.sql.functions import col
+from pyspark.sql import functions as F
 
 # METADATA ********************
 
@@ -86,7 +87,8 @@ col("topic"),
 col("partition"), 
 col("offset"),
 col("timestamp"),
-col("timestampType")
+col("timestampType"),
+F.current_timestamp().alias("ingestion_timestamp")
 )
 
 # METADATA ********************
@@ -100,11 +102,11 @@ col("timestampType")
 
 streaming_query = (parsed_streaming_df.writeStream.format('delta') \
     .outputMode('append') \
-    .option('checkpointLocation', 'abfss://198ac056-e709-4dd6-bcfe-9ad6550ea321@onelake.dfs.fabric.microsoft.com/6bb65a11-d438-4fd0-b737-18b12947cead/Files/finguard/source/transactions/checkpoint/') \
-    .trigger(availableNow=True) \
+    .option('checkpointLocation', 'abfss://198ac056-e709-4dd6-bcfe-9ad6550ea321@onelake.dfs.fabric.microsoft.com/6bb65a11-d438-4fd0-b737-18b12947cead/Files/finguard/bronze/source/transactions/checkpoint/') \
+    .trigger(processingTime="10 seconds") \
     .toTable('dbo.transactions')
 )
-print("Query ID :",streaming_query.id)
+streaming_query.awaitTermination()
 
 # METADATA ********************
 

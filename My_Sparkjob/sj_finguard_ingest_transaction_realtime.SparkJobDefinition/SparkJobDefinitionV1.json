@@ -1,0 +1,14 @@
+{
+  "executableFile": "sj_finguard_ingest_transaction_realtime.py",
+  "defaultLakehouseArtifactId": "5a3aca47-3afc-4d35-b7be-8a5f1c59ace4",
+  "mainClass": "",
+  "additionalLakehouseIds": [
+    "e31b1836-a85b-41f5-9285-7a1b50c90046",
+    "6bb65a11-d438-4fd0-b737-18b12947cead"
+  ],
+  "retryPolicy": null,
+  "commandLineArguments": "",
+  "additionalLibraryUris": [],
+  "language": "Python",
+  "environmentArtifactId": null
+}
