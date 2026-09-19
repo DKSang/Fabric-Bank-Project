@@ -22,17 +22,9 @@
 
 # CELL ********************
 
-from pyspark.sql.dataframe import DataFrame
+from delta.tables import DeltaTable
 from pyspark.sql.functions import col
 from pyspark.sql import functions as F
-from pyspark.sql.types import (
-    StructType, 
-    StructField, 
-    StringType, 
-    DecimalType, 
-    BooleanType, 
-    TimestampType
-)
 
 
 # METADATA ********************
@@ -73,11 +65,24 @@ silver_df = (
     .withColumn("silver_ingestion_time_stamp", F.current_timestamp())
 )
 
-silver_df.write \
-    .format("delta") \
-    .mode("overwrite") \
-    .option("overwriteSchema", "true") \
-    .saveAsTable("dbo.customers")
+silver_table = "dbo.customers"
+
+if spark.catalog.tableExists(silver_table):
+    (
+        DeltaTable.forName(spark, silver_table)
+        .alias("target")
+        .merge(
+            silver_df.alias("source"),
+            "target.customer_id = source.customer_id"
+        )
+        .whenMatchedUpdateAll(
+            condition="target.update_timestamp IS NULL OR source.update_timestamp > target.update_timestamp"
+        )
+        .whenNotMatchedInsertAll()
+        .execute()
+    )
+else:
+    silver_df.write.format("delta").saveAsTable(silver_table)
 
 # METADATA ********************
 

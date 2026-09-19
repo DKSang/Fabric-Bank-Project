@@ -1,0 +1,329 @@
+{
+    "properties": {
+        "jobMode": "CDC",
+        "source": {
+            "type": "PostgreSqlTable",
+            "connectionSettings": {
+                "type": "PostgreSql",
+                "externalReferences": {
+                    "connection": "46c52700-738a-47de-b221-e70ff7d0a7b3"
+                }
+            }
+        },
+        "destination": {
+            "type": "LakehouseTable",
+            "connectionSettings": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "artifactId": "1c59ace4-8a5f-b7be-4d35-3afc5a3aca47",
+                    "rootFolder": "Tables"
+                }
+            }
+        },
+        "policy": {
+            "timeout": "0.12:00:00",
+            "retry": 2
+        }
+    },
+    "activities": [
+        {
+            "id": "81225b31-b3e4-42a2-9386-43bf9798e4e6",
+            "properties": {
+                "source": {
+                    "datasetSettings": {
+                        "schema": "public",
+                        "table": "customers"
+                    },
+                    "changeDataSettings": {
+                        "readMethod": "SnapshotPlusIncremental",
+                        "columns": [
+                            {
+                                "name": "update_timestamp",
+                                "type": "DateTime",
+                                "physicalType": "timestamp without time zone"
+                            }
+                        ]
+                    },
+                    "partitionSettings": {
+                        "partitionOption": "None"
+                    }
+                },
+                "destination": {
+                    "upsertSettings": {
+                        "keys": [
+                            "customer_id"
+                        ]
+                    },
+                    "writeBehavior": "Upsert",
+                    "datasetSettings": {
+                        "schema": "dbo",
+                        "table": "customers"
+                    }
+                },
+                "enableStaging": false,
+                "translator": {
+                    "type": "TabularTranslator",
+                    "mappings": [
+                        {
+                            "source": {
+                                "name": "customer_id",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "customer_id",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "first_name",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "first_name",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "last_name",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "last_name",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "gender",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "gender",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "age",
+                                "type": "Int32",
+                                "physicalType": "integer"
+                            },
+                            "destination": {
+                                "name": "age",
+                                "physicalType": "integer"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "city",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "city",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "state",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "state",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "country",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "country",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "annual_income",
+                                "type": "Decimal",
+                                "physicalType": "numeric"
+                            },
+                            "destination": {
+                                "name": "annual_income",
+                                "physicalType": "decimal",
+                                "scale": 18,
+                                "precision": 38
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "customer_segment",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "customer_segment",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "account_open_date",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "account_open_date",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "risk_score",
+                                "type": "Int32",
+                                "physicalType": "integer"
+                            },
+                            "destination": {
+                                "name": "risk_score",
+                                "physicalType": "integer"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "preferred_spending_min",
+                                "type": "Decimal",
+                                "physicalType": "numeric"
+                            },
+                            "destination": {
+                                "name": "preferred_spending_min",
+                                "physicalType": "decimal",
+                                "scale": 18,
+                                "precision": 38
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "preferred_spending_max",
+                                "type": "Decimal",
+                                "physicalType": "numeric"
+                            },
+                            "destination": {
+                                "name": "preferred_spending_max",
+                                "physicalType": "decimal",
+                                "scale": 18,
+                                "precision": 38
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "preferred_city",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "preferred_city",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "preferred_country",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "preferred_country",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "trusted_device_id",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "trusted_device_id",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "card_number",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "card_number",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "card_type",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "card_type",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "email",
+                                "type": "String",
+                                "physicalType": "character varying"
+                            },
+                            "destination": {
+                                "name": "email",
+                                "physicalType": "string"
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "transaction_limit",
+                                "type": "Decimal",
+                                "physicalType": "numeric"
+                            },
+                            "destination": {
+                                "name": "transaction_limit",
+                                "physicalType": "decimal",
+                                "scale": 18,
+                                "precision": 38
+                            }
+                        },
+                        {
+                            "source": {
+                                "name": "update_timestamp",
+                                "type": "DateTime",
+                                "physicalType": "timestamp without time zone"
+                            },
+                            "destination": {
+                                "name": "update_timestamp",
+                                "physicalType": "timestamp"
+                            }
+                        }
+                    ]
+                },
+                "typeConversionSettings": {
+                    "typeConversion": {
+                        "allowDataTruncation": true,
+                        "treatBooleanAsNumber": false
+                    }
+                }
+            }
+        }
+    ]
+}
