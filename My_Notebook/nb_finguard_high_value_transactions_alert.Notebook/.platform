@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_finguard_high_value_transactions_alert"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8d1be2f4-9a67-4c30-bb94-5f7e9c1842ad"
+  }
+}
