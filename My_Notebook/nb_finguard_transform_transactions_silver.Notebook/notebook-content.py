@@ -100,26 +100,6 @@ transaction_schema = StructType([
 
 # CELL ********************
 
-kafka_metadata_cols = [
-    col(c).alias(f"kafka_{c}") for c in ["topic", "partition", "offset", "timestamp"]
-]
-
-transformed_df = (
-    bronze_df
-    .withColumn("data", F.from_json(col("value").cast("string"), transaction_schema))
-    .select("data.*", *kafka_metadata_cols, "ingestion_timestamp")
-)
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 valid_filter = (
     col("transaction_id").isNotNull() &
     col("customer_id").isNotNull() &
@@ -128,7 +108,7 @@ valid_filter = (
     (col("amount") > 0)
 )
 
-silver_clean_df = transformed_df.filter(valid_filter)
+silver_clean_df = bronze_df.filter(valid_filter).col()
 
 
 # METADATA ********************
