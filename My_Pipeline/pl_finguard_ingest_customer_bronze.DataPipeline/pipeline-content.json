@@ -2,32 +2,11 @@
   "properties": {
     "activities": [
       {
-        "name": "Ingest customers Bronze",
-        "type": "InvokeCopyJob",
-        "dependsOn": [],
-        "policy": {
-          "timeout": "0.12:00:00",
-          "retry": 2,
-          "retryIntervalInSeconds": 30,
-          "secureInput": false,
-          "secureOutput": false
-        },
-        "typeProperties": {
-          "copyJobId": "3cdec20e-f9c0-4481-abc9-5aeed19aece5",
-          "workspaceId": "00000000-0000-0000-0000-000000000000"
-        }
-      },
-      {
-        "name": "Transform customers Silver",
         "type": "TridentNotebook",
-        "dependsOn": [
-          {
-            "activity": "Ingest customers Bronze",
-            "dependencyConditions": [
-              "Succeeded"
-            ]
-          }
-        ],
+        "typeProperties": {
+          "notebookId": "228fbac2-5785-b398-4a10-58dfb2e042d7",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
         "policy": {
           "timeout": "0.12:00:00",
           "retry": 1,
@@ -35,10 +14,34 @@
           "secureInput": false,
           "secureOutput": false
         },
+        "name": "Transform customers Silver",
+        "dependsOn": [
+          {
+            "activity": "Copy job1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokeCopyJob",
         "typeProperties": {
-          "notebookId": "228fbac2-5785-b398-4a10-58dfb2e042d7",
+          "copyJobId": "b6aef4b4-61f8-8da0-43ad-bd0777944aa5",
           "workspaceId": "00000000-0000-0000-0000-000000000000"
-        }
+        },
+        "externalReferences": {
+          "connection": "29fb2b0a-0a23-493d-8a85-fad93875eeae"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Copy job1",
+        "dependsOn": []
       }
     ]
   }

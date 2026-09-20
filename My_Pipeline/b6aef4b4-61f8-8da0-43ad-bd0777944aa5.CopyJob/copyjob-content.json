@@ -1,0 +1,79 @@
+{
+  "properties": {
+    "jobMode": "CDC",
+    "fullLoadBehavior": "Truncate",
+    "source": {
+      "type": "PostgreSqlTable",
+      "connectionSettings": {
+        "type": "PostgreSql",
+        "externalReferences": {
+          "connection": "0601b2ed-31fc-4245-95fa-215264474e10"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "1c59ace4-8a5f-b7be-4d35-3afc5a3aca47",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00",
+      "retry": 0
+    }
+  },
+  "activities": [
+    {
+      "id": "50bc76c5-8c1d-4e87-b940-d0667b59a44d",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "public",
+            "table": "customers"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental",
+            "columns": [
+              {
+                "name": "update_timestamp",
+                "type": "DateTime",
+                "physicalType": "timestamp without time zone"
+              }
+            ],
+            "nullWatermarkBehavior": "Skip"
+          }
+        },
+        "destination": {
+          "upsertSettings": {
+            "keys": [
+              "customer_id"
+            ]
+          },
+          "writeBehavior": "Upsert",
+          "datasetSettings": {
+            "schema": "dbo",
+            "table": "customers"
+          },
+          "applyVOrder": false,
+          "enableTimestampNtz": false,
+          "enableChangeDataFeed": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}
