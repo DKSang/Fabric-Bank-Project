@@ -108,7 +108,7 @@ valid_filter = (
     (col("amount") > 0)
 )
 
-silver_clean_df = bronze_df.filter(valid_filter).col()
+silver_clean_df = bronze_df.filter(valid_filter)
 
 
 # METADATA ********************
